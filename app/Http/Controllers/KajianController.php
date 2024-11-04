@@ -1,0 +1,175 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\KajianModel;
+use Illuminate\Http\Request;
+
+class KajianController extends Controller
+{
+
+    public function index()
+    {
+        return response([
+            'kajian' => KajianModel::all()
+        ], 200);
+    }
+
+    // get single post
+    public function show($id)
+    {
+        return response([
+            'kajian' => KajianModel::where('kajian_id', $id)->get()
+        ], 200);
+    }
+
+    // create a post
+    public function store(Request $request)
+    {
+        //validate fields
+        $attrs = $request->validate([
+            'title' => 'required|string',
+            'speaker_name' => 'required|string',
+            'theme' => 'required|string',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+        ]);
+
+        $image = $this->saveImage($request->image, 'kajian');
+
+        $kajian = KajianModel::create([
+            'title' => $attrs['title'],
+            'speaker_name' => $attrs['speaker_name'],
+            'theme' => $attrs['theme'],
+            'date' => $attrs['date'],
+            'location' => $attrs['location'],
+            'start_time' => $attrs['start_time'],
+            'end_time' => $attrs['end_time'],
+            'image' => $image
+        ]);
+
+        // for now skip for post image
+
+        return response([
+            'message' => 'Kajian created.',
+            'kajian' => $kajian,
+        ], 200);
+    }
+
+    // update a post
+    public function update(Request $request, $id)
+    {
+        $kajian = KajianModel::find($id);
+
+        if (!$kajian) {
+            return response([
+                'message' => 'kajian not found.'
+            ], 403);
+        }
+
+        //validate fields
+        $attrs = $request->validate([
+            'title' => 'required|string',
+            'speaker_name' => 'required|string',
+            'theme' => 'required|string',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+        ]);
+
+        $kajian->update([
+            'title' => $attrs['title'],
+            'speaker_name' => $attrs['speaker_name'],
+            'theme' => $attrs['theme'],
+            'date' => $attrs['date'],
+            'location' => $attrs['location'],
+            'start_time' => $attrs['start_time'],
+            'end_time' => $attrs['end_time'],
+        ]);
+
+        // for now skip for kajian image
+
+        return response([
+            'message' => 'kajian updated.',
+            'kajian' => $kajian
+        ], 200);
+    }
+
+    //delete post
+    public function destroy($id)
+    {
+        $kajian = KajianModel::find($id);
+
+        if (!$kajian) {
+            return response([
+                'message' => 'kajian not found.'
+            ], 403);
+        }
+
+        if ($kajian->user_id != auth()->user()->id) {
+            return response([
+                'message' => 'Permission denied.'
+            ], 403);
+        }
+
+        $kajian->delete();
+
+        return response([
+            'message' => 'Kajian deleted.'
+        ], 200);
+    }
+
+    // public function index()
+    // {
+    //     $data = KajianModel::all();
+    //     return $data;
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $save = new KajianModel();
+    //     $save->image = $request->image;
+    //     $save->title = $request->title;
+    //     $save->speaker_name = $request->speaker_name;
+    //     $save->theme = $request->theme;
+    //     $save->date = $request->date;
+    //     $save->location = $request->location;
+    //     $save->start_time = $request->start_time;
+    //     $save->end_time = $request->end_time;
+    //     $save->save();
+
+    //     return "Berhasil Menyimpan Data";
+    // }
+
+    // public function show(Request $request)
+    // {
+    //     $data = KajianModel::all()->where('kajian_id', $request->kajian_id)->first();
+    //     return $data;
+    // }
+
+    // public function update(Request $request)
+    // {
+    //     $data = KajianModel::all()->where('kajian_id', $request->kajian_id)->first();
+    //     $data->image = $request->image;
+    //     $data->title = $request->title;
+    //     $data->speaker_name = $request->speaker_name;
+    //     $data->theme = $request->theme;
+    //     $data->date = $request->date;
+    //     $data->location = $request->location;
+    //     $data->start_time = $request->start_time;
+    //     $data->end_time = $request->end_time;
+    //     $data->save();
+    //     return "Berhasil Mengubah Data";
+    // }
+
+
+    // public function destroy(Request $request)
+    // {
+    //     $del = KajianModel::all()->where('kajian_id', $request->kajian_id)->first();
+    //     $del->delete();
+    //     return "Berhasil Menghapus Data";
+    // }
+}
