@@ -12,14 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tiket', function (Blueprint $table) {
-            $table->bigIncrements('tiket_id');
-            $table->unsignedBigInteger('user')->index()->nullable();
-            $table->unsignedBigInteger('kajian')->index();
-            // $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            // $table->foreignId('kajian_id')->constrained('kajian')->onDelete('cascade');
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('kajian_id');
+
             $table->timestamps();
-            $table->foreign('user')->references('user_id')->on('users');
-            $table->foreign('kajian')->references('kajian_id')->on('kajian');
         });
     }
 

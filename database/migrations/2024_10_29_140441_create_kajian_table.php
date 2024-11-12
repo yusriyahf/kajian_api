@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kajian', function (Blueprint $table) {
-            $table->bigIncrements('kajian_id');
+            $table->id();
             $table->string('image')->nullable();
             $table->string('title');
             $table->string('speaker_name');
             $table->string('theme');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->string('location');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             // $table->foreignId('kehadiran_id')->constrained('kehadiran')->onDelete('cascade');
             $table->timestamps();
         });

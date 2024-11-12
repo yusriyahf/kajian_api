@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::put('/user', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::put('/password', [AuthController::class, 'updatePassword']);
 
     // Post
     Route::get('/kajian', [KajianController::class, 'index']); // all posts

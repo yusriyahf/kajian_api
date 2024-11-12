@@ -15,6 +15,6 @@ class KehadiranModel extends Model
 
     public function getkajian()
     {
-        return $this->belongsTo(KajianModel::class, 'kajian', 'kajian_id');
+        return $this->belongsTo(Kajian::class, 'kajian', 'kajian_id');
     }
 }

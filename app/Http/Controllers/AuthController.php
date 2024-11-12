@@ -93,4 +93,20 @@ class AuthController extends Controller
             'user' => auth()->user()
         ], 200);
     }
+
+    public function updatePassword(Request $request)
+    {
+        $attrs = $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        auth()->user()->update([
+            'password' => bcrypt($attrs['password']),
+        ]);
+
+        return response([
+            'message' => 'User Password updated.',
+            'user' => auth()->user()
+        ], 200);
+    }
 }

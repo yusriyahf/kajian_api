@@ -10,15 +10,20 @@ class TiketController extends Controller
     public function index()
     {
         return response([
-            'tiket' => TiketModel::all()
+            'tiket' => TiketModel::with([
+                'user:id,first_name,last_name,email',
+                'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time'
+            ])->get()
+            // 'tiket' => TiketModel::all()
         ], 200);
     }
+
 
     // get single post
     public function show($id)
     {
         return response([
-            'tiket' => TiketModel::where('tiket_id', $id)->get()
+            'tiket' => TiketModel::where('id', $id)->get()
         ], 200);
     }
     // public function index()

@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('catatan', function (Blueprint $table) {
-            $table->bigIncrements('catatan_id');
+            $table->id();
+            $table->integer('user_id');
             $table->string('title');
             $table->text('description');
-            $table->unsignedBigInteger('user')->index();
             $table->timestamps();
-            $table->foreign('user')->references('user_id')->on('users');
         });
     }
 

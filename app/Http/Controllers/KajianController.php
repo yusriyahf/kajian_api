@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KajianModel;
+use App\Models\Kajian;
 use Illuminate\Http\Request;
 
 class KajianController extends Controller
@@ -11,7 +11,7 @@ class KajianController extends Controller
     public function index()
     {
         return response([
-            'kajian' => KajianModel::all()
+            'kajian' => Kajian::all()
         ], 200);
     }
 
@@ -19,7 +19,7 @@ class KajianController extends Controller
     public function show($id)
     {
         return response([
-            'kajian' => KajianModel::where('kajian_id', $id)->get()
+            'kajian' => Kajian::where('id', $id)->get()
         ], 200);
     }
 
@@ -39,7 +39,7 @@ class KajianController extends Controller
 
         $image = $this->saveImage($request->image, 'kajian');
 
-        $kajian = KajianModel::create([
+        $kajian = Kajian::create([
             'title' => $attrs['title'],
             'speaker_name' => $attrs['speaker_name'],
             'theme' => $attrs['theme'],
@@ -61,7 +61,7 @@ class KajianController extends Controller
     // update a post
     public function update(Request $request, $id)
     {
-        $kajian = KajianModel::find($id);
+        $kajian = Kajian::find($id);
 
         if (!$kajian) {
             return response([
@@ -101,7 +101,7 @@ class KajianController extends Controller
     //delete post
     public function destroy($id)
     {
-        $kajian = KajianModel::find($id);
+        $kajian = Kajian::find($id);
 
         if (!$kajian) {
             return response([
@@ -124,13 +124,13 @@ class KajianController extends Controller
 
     // public function index()
     // {
-    //     $data = KajianModel::all();
+    //     $data = Kajian::all();
     //     return $data;
     // }
 
     // public function store(Request $request)
     // {
-    //     $save = new KajianModel();
+    //     $save = new Kajian();
     //     $save->image = $request->image;
     //     $save->title = $request->title;
     //     $save->speaker_name = $request->speaker_name;
@@ -146,13 +146,13 @@ class KajianController extends Controller
 
     // public function show(Request $request)
     // {
-    //     $data = KajianModel::all()->where('kajian_id', $request->kajian_id)->first();
+    //     $data = Kajian::all()->where('kajian_id', $request->kajian_id)->first();
     //     return $data;
     // }
 
     // public function update(Request $request)
     // {
-    //     $data = KajianModel::all()->where('kajian_id', $request->kajian_id)->first();
+    //     $data = Kajian::all()->where('kajian_id', $request->kajian_id)->first();
     //     $data->image = $request->image;
     //     $data->title = $request->title;
     //     $data->speaker_name = $request->speaker_name;
