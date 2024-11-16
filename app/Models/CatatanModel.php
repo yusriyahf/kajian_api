@@ -10,7 +10,7 @@ class CatatanModel extends Model
     use HasFactory;
 
     protected $table = 'catatan';
-    protected $primaryKey = 'catatan_id';
+    protected $primaryKey = 'id';
     protected $guarded = ['catatan_id'];
 
     public function getuser()

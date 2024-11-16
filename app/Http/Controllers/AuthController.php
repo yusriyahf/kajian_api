@@ -24,6 +24,7 @@ class AuthController extends Controller
             'first_name' => $attrs['first_name'],
             'last_name' => $attrs['last_name'],
             'email' => $attrs['email'],
+            'role' => 2,
             'password' => bcrypt($attrs['password'])
         ]);
 
@@ -71,6 +72,13 @@ class AuthController extends Controller
     {
         return response([
             'user' => auth()->user()
+        ], 200);
+    }
+
+    public function getRole()
+    {
+        return response([
+            'role' => auth()->user()->role,
         ], 200);
     }
 

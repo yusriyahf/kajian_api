@@ -15,6 +15,21 @@ class KajianController extends Controller
         ], 200);
     }
 
+    public function kajianLast()
+    {
+        $kajian = Kajian::latest()->first();
+
+        if (!$kajian) {
+            return response([
+                'message' => 'No kajian found.'
+            ], 404);
+        }
+
+        return response([
+            'kajian' => $kajian
+        ], 200);
+    }
+
     // get single post
     public function show($id)
     {

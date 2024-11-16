@@ -10,7 +10,7 @@ class CatatanController extends Controller
     public function index()
     {
         return response([
-            'catatan' => CatatanModel::all()
+            'catatan' => CatatanModel::where('user_id', auth()->user()->id)->get()
         ], 200);
     }
 
@@ -27,14 +27,13 @@ class CatatanController extends Controller
     {
         //validate fields
         $attrs = $request->validate([
-            'user_id' => 'required',
             'title' => 'required|string',
             'description' => 'required|string',
 
         ]);
 
         $catatan = CatatanModel::create([
-            'user_id' => $attrs['user_id'],
+            'user_id' => auth()->user()->id,
             'title' => $attrs['title'],
             'description' => $attrs['description'],
         ]);
@@ -60,13 +59,12 @@ class CatatanController extends Controller
 
         //validate fields
         $attrs = $request->validate([
-            'user_id' => 'required',
             'title' => 'required|string',
             'description' => 'required|string',
         ]);
 
         $catatan->update([
-            'user_id' => $attrs['user_id'],
+            'user_id' => auth()->user()->id,
             'title' => $attrs['title'],
             'description' => $attrs['description'],
         ]);
@@ -82,7 +80,7 @@ class CatatanController extends Controller
     //delete post
     public function destroy($id)
     {
-        $catatan = CatatanModel::where('id', $id)->get();
+        $catatan = CatatanModel::where('id', $id)->first();
 
         if (!$catatan) {
             return response([
