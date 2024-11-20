@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('speaker_name');
             $table->string('theme');
             $table->date('date')->nullable();
+            $table->integer('price');
             $table->string('location');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();

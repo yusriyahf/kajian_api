@@ -15,9 +15,13 @@ class KajianController extends Controller
         ], 200);
     }
 
-    public function kajianLast()
+    public function kajianToday()
     {
-        $kajian = Kajian::latest()->first();
+        // Get the current date
+        $currentDate = now()->toDateString(); // Formats to 'YYYY-MM-DD'
+
+        // Find the Kajian with the current date
+        $kajian = Kajian::whereDate('date', $currentDate)->get();
 
         if (!$kajian) {
             return response([
@@ -29,6 +33,22 @@ class KajianController extends Controller
             'kajian' => $kajian
         ], 200);
     }
+
+    public function kajianLast()
+    {
+        $kajians = Kajian::latest()->take(2)->get(); // Ambil 2 entri terakhir
+
+        if ($kajians->isEmpty()) {
+            return response([
+                'message' => 'No kajian found.'
+            ], 404);
+        }
+
+        return response([
+            'kajians' => $kajians
+        ], 200);
+    }
+
 
     // get single post
     public function show($id)
@@ -46,6 +66,7 @@ class KajianController extends Controller
             'title' => 'required|string',
             'speaker_name' => 'required|string',
             'theme' => 'required|string',
+            'price' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string',
             'start_time' => 'required|date_format:H:i',
@@ -59,6 +80,7 @@ class KajianController extends Controller
             'speaker_name' => $attrs['speaker_name'],
             'theme' => $attrs['theme'],
             'date' => $attrs['date'],
+            'price' => intval($attrs['price']),
             'location' => $attrs['location'],
             'start_time' => $attrs['start_time'],
             'end_time' => $attrs['end_time'],
