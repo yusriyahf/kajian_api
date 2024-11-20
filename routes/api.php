@@ -33,12 +33,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // User
     Route::get('/user', [AuthController::class, 'user']);
     Route::get('/role', [AuthController::class, 'getRole']);
+    Route::get('/totaluser', [AuthController::class, 'totalUser']);
     Route::put('/user', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::put('/password', [AuthController::class, 'updatePassword']);
 
     // Post
     Route::get('/kajianlast', [KajianController::class, 'kajianLast']); // all posts
+    Route::get('/kajiantoday', [KajianController::class, 'kajianToday']); // all posts
     Route::get('/kajian', [KajianController::class, 'index']); // all posts
     Route::post('/kajian', [KajianController::class, 'store']); // create post
     Route::get('/kajian/{id}', [KajianController::class, 'show']); // get single post
