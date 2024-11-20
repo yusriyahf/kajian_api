@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('kajian_id');
+            $table->string('bukti_pembayaran')->nullable();
 
             $table->timestamps();
         });

@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/tiket/{id}', [TiketController::class, 'show']); // get single post
     Route::put('/tiket/{id}', [TiketController::class, 'update']); // update post
     Route::delete('/tiket/{id}', [TiketController::class, 'destroy']); // delete post
+    Route::post('/tiket/up_bayar', [TiketController::class, 'uploadBuktiPembayaran']);
 
     // Tiket
     Route::get('/catatan', [CatatanController::class, 'index']); // all posts
