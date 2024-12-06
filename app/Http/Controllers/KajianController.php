@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kajian;
+use App\Models\KehadiranModel;
 use Illuminate\Http\Request;
 
 class KajianController extends Controller
@@ -45,7 +46,7 @@ class KajianController extends Controller
         }
 
         return response([
-            'kajians' => $kajians
+            'kajian' => $kajians
         ], 200);
     }
 
@@ -61,7 +62,7 @@ class KajianController extends Controller
     // create a post
     public function store(Request $request)
     {
-        //validate fields
+        // Validate fields
         $attrs = $request->validate([
             'title' => 'required|string',
             'speaker_name' => 'required|string',
@@ -73,8 +74,10 @@ class KajianController extends Controller
             'end_time' => 'required|date_format:H:i',
         ]);
 
+        // Save the image
         $image = $this->saveImage($request->image, 'kajian');
 
+        // Create the Kajian
         $kajian = Kajian::create([
             'title' => $attrs['title'],
             'speaker_name' => $attrs['speaker_name'],
@@ -87,13 +90,18 @@ class KajianController extends Controller
             'image' => $image
         ]);
 
-        // for now skip for post image
+        // $kehadiran = KehadiranModel::create([
+        //     'kajian_id' => $kajian->id,
+        // ]);
 
+        // Return response
         return response([
             'message' => 'Kajian created.',
             'kajian' => $kajian,
+            // 'kehadiran' => $kehadiran,
         ], 200);
     }
+
 
     // update a post
     public function update(Request $request, $id)

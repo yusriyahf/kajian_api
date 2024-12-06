@@ -12,11 +12,34 @@ class TiketController extends Controller
         return response([
             'tiket' => TiketModel::with([
                 'user:id,first_name,last_name,email',
-                'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time'
+                'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
             ])->get()
             // 'tiket' => TiketModel::all()
         ], 200);
     }
+
+    public function tiketLast()
+    {
+        // Ambil 2 entri terakhir dan sertakan relasi user dan kajian
+        $tiket = TiketModel::with([
+            'user:id,first_name,last_name,email',
+            'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
+        ])
+            ->latest()
+            ->take(2)
+            ->get();
+
+        if ($tiket->isEmpty()) {
+            return response([
+                'message' => 'No tiket found.'
+            ], 404);
+        }
+
+        return response([
+            'tiket' => $tiket
+        ], 200);
+    }
+
 
 
     // get single post

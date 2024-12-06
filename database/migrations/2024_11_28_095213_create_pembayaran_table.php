@@ -11,24 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kehadiran', function (Blueprint $table) {
+        Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id');
             $table->integer('kajian_id');
-            // $table->integer('total')->default(0);
-            $table->boolean('male')->default(false);
-            $table->boolean('female')->default(false);
-
+            $table->datetime('date');
+            $table->enum('status', ['diacc', 'ditolak', 'diproses']);
+            $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('kehadiran');
+        Schema::dropIfExists('pembayaran');
     }
 };
