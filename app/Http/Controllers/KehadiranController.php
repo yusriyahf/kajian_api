@@ -7,6 +7,52 @@ use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
+    public function addKehadiran(Request $request)
+    {
+        // Validasi fields
+        $attrs = $request->validate([
+            'user_id' => 'required',
+            'kajian_id' => 'required',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+        ]);
+
+        $genderData = [];
+        if ($attrs['gender'] == 'Laki-laki') {
+            $genderData['male'] = true;
+        } elseif ($attrs['gender'] == 'Perempuan') {
+            $genderData['female'] = true;
+        }
+
+        // Check if record already exists
+        $existingKehadiran = KehadiranModel::where('kajian_id', $attrs['kajian_id'])
+            ->where('user_id', $attrs['user_id'])
+            ->first();
+
+        if ($existingKehadiran) {
+            return response([
+                'message' => 'Kehadiran already exists.',
+                'kehadiran' => $existingKehadiran,
+            ], 400); // Return error response with 400 status
+        }
+
+        // Create new record if not exists
+        $kehadiran = KehadiranModel::create([
+            'kajian_id' => $attrs['kajian_id'],
+            'user_id' => $attrs['user_id'],
+            'gender' => $attrs['gender'],
+            ...$genderData, // Menyertakan data gender
+        ]);
+
+        return response([
+            'message' => 'Kehadiran created.',
+            'kehadiran' => $kehadiran,
+        ], 201); // Return success response with 201 status
+    }
+
+
+
+
+
     public function addMale(Request $request)
     {
         // Validate fields

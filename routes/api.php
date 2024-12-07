@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/tolakpembayaran/{id}', [PembayaranController::class, 'tolak']); // all Pembayaran
 
     // Kehadiran
+    Route::post('/addkehadiran', [KehadiranController::class, 'addKehadiran']); // addMale
     Route::post('/addmale', [KehadiranController::class, 'addMale']); // addMale
     Route::post('/addfemale', [KehadiranController::class, 'addFemale']); // addMale
     Route::get('/totalkehadiran/{id}', [KehadiranController::class, 'totalKehadiran']); // totalKehadiran

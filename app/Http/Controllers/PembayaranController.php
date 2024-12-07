@@ -15,9 +15,7 @@ class PembayaranController extends Controller
             'pembayaran' => PembayaranModel::with([
                 'user:id,first_name,last_name,email',
                 'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
-            ])
-                ->where('status', 'diproses')
-                ->get()
+            ])->get()
         ], 200);
     }
 
@@ -76,20 +74,15 @@ class PembayaranController extends Controller
 
         $attrs = $request->validate([
             'kajian_id' => 'required|string',
-            // 'bukti_pemabayaran' => 'required|string',
+            'user_id' => 'required|string',
+            // 'bukti_pembayaran' => 'required',
         ]);
 
         $tiket = TiketModel::create([
             'kajian_id' => $attrs['kajian_id'],
-            'user_id' => auth()->user()->id,
+            'user_id' => $attrs['kajian_id'],
             // 'bukti_pembayaran' => $attrs['bukti_pembayaran'],
         ]);
-
-        //validate fields
-        // $attrs = $request->validate([
-        //     'title' => 'required|string',
-        //     'description' => 'required|string',
-        // ]);
 
         $pembayaran->update([
             'status' => 'diacc',
