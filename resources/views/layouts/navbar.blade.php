@@ -8,7 +8,7 @@
     </ul>
     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-        <a class="btn btn-primary">Hi, {{ Auth::user()->first_name }}</a>
+        <a class="btn btn-primary">Hi, </a>
       </ul>
     </div>
   </nav>
