@@ -19,6 +19,18 @@ class PembayaranController extends Controller
         ], 200);
     }
 
+    public function indexUser()
+    {
+        return response([
+            'pembayaran' => PembayaranModel::with([
+                'user:id,first_name,last_name,email',
+                'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
+            ])
+                ->where('user_id', auth()->user()->id)
+                ->get()
+        ], 200);
+    }
+
 
     public function store(Request $request)
     {

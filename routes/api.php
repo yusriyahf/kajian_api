@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/user', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::put('/password', [AuthController::class, 'updatePassword']);
+    Route::put('/editprofile', [AuthController::class, 'updateProfile']);
 
     // Post
     Route::get('/kajianlast', [KajianController::class, 'kajianLast']); // all posts
@@ -67,6 +68,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Pembayaran
     Route::get('/pembayaran', [PembayaranController::class, 'index']); // all Pembayaran
+    Route::get('/pembayaranuser', [PembayaranController::class, 'indexUser']); // all Pembayaran
     Route::post('/pembayaran', [PembayaranController::class, 'store']); // all Pembayaran
     Route::post('/accpembayaran/{id}', [PembayaranController::class, 'acc']); // all Pembayaran
     Route::post('/tolakpembayaran/{id}', [PembayaranController::class, 'tolak']); // all Pembayaran
