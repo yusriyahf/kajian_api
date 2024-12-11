@@ -49,6 +49,7 @@ class UserControllerWeb extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
+            'role' => 'required',
             // 'password' => 'required',
         ]);
 
@@ -59,6 +60,7 @@ class UserControllerWeb extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => $password,
+            'role' => $request->role,
         ]);
 
         return redirect('/user')->with('success', 'Data user berhasil diubah');
