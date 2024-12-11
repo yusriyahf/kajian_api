@@ -81,4 +81,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/totalmale/{id}', [KehadiranController::class, 'totalMale']); // totalKehadiran
     Route::get('/totalfemale/{id}', [KehadiranController::class, 'totalFemale']); // totalKehadiran
     Route::get('/total/{id}', [KehadiranController::class, 'total']); // totalKehadiran
+
+    // Check Tiket
+    Route::post('/checktiket', [TiketController::class, 'checkTiket']);
+    Route::post('/iduser', [TiketController::class, 'getIdUser']);
+    // Route::get('/totalgender', [TiketController::class, 'totalGender']); 
+    Route::get('/totalmale', [TiketController::class, 'totalMale']);
+    Route::get('/totalfemale', [TiketController::class, 'totalFemale']);
+    Route::get('/totalall', [TiketController::class, 'totalAll']);
 });

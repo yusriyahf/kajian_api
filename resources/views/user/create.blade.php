@@ -8,7 +8,7 @@
                 <h5 class="card-title">Tambah User</h5>
                 <form action="/user/create" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="role" value="2">
+                    
                     <div class="mb-3">
                         <label for="first_name" class="form-label">First Name</label>
                         <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ old('first_name') }}" required>
@@ -43,8 +43,15 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <input type="text" class="form-control @error('role') is-invalid @enderror" id="role" name="role" value="{{ old('role') }}" required>
+                        @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     
-
+                    
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="" class="btn btn-secondary">Batal</a>

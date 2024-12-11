@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TiketModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TiketController extends Controller
@@ -66,15 +67,104 @@ class TiketController extends Controller
         return response()->json(['error' => 'Gagal mengunggah file'], 500);
     }
 
-    // public function index()
-    // {
-    //     $data = TiketModel::all();
-    //     return $data;
-    // }
+    public function checkTiket(Request $request)
+    {
+        $validatedData = $request->validate([
+            'kajian_id' => 'required',
+            'name' => 'required|string',
+        ]);
 
-    // public function show(Request $request)
+        // Pisahkan nama menjadi first_name dan last_name
+        $nameParts = explode(' ', $validatedData['name'], 2);
+        $first_name = $nameParts[0];
+        $last_name = isset($nameParts[1]) ? $nameParts[1] : '';
+
+        // Cari user_id berdasarkan first_name dan last_name
+        $user = User::where('first_name', $first_name)
+            ->where('last_name', $last_name)
+            ->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Cek keberadaan tiket berdasarkan kajian_id dan user_id
+        $exists = TiketModel::where('kajian_id', $validatedData['kajian_id'])
+            ->where('user_id', $user->id)
+            ->exists();
+
+        return response()->json(['tiket' => $exists], 200);
+    }
+
+    public function getIdUser(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $nameParts = explode(' ', $validatedData['name'], 2);
+        $first_name = $nameParts[0];
+        $last_name = isset($nameParts[1]) ? $nameParts[1] : '';
+
+        // Cari user_id berdasarkan first_name dan last_name
+        $user = User::where('first_name', $first_name)
+            ->where('last_name', $last_name)
+            ->first();
+
+        if ($user) {
+            // Mengembalikan id dari user yang ditemukan
+            return response()->json(['user_id' => $user->id], 200);
+        } else {
+            // Jika tidak ditemukan, mengembalikan error
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
+    public function totalMale()
+    {
+        $totalMale = User::where('gender', 'Laki-laki')
+            ->where('role', 2)
+            ->count();
+
+        return response([
+            'totalMale' => $totalMale,
+        ], 200);
+    }
+
+    public function totalFemale()
+    {
+        $totalFemale = User::where('gender', 'Perempuan')
+            ->where('role', 2)
+            ->count();
+
+        return response([
+            'totalFemale' => $totalFemale,
+        ], 200);
+    }
+
+    public function totalAll()
+    {
+        $totalUsers = User::where('role', 2)->count();
+        return response([
+            'totalFemale' => $totalUsers,
+        ], 200);
+    }
+    // public function totalGender()
     // {
-    //     $data = TiketModel::all()->where('tiket_id', $request->tiket_id)->first();
-    //     return $data;
+    //     $totalMale = User::where('gender', 'Laki-laki')
+    //         ->where('role', 2)
+    //         ->count();
+
+    //     $totalFemale = User::where('gender', 'Perempuan')
+    //         ->where('role', 2)
+    //         ->count();
+
+    //     $totalAll = $totalFemale + $totalMale;
+
+    //     return response([
+    //         'totalMale' => $totalMale,
+    //         'totalFemale' => $totalFemale,
+    //         'totalAll' => $totalAll,
+    //     ], 200);
     // }
 }

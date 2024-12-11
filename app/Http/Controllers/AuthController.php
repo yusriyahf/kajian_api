@@ -16,7 +16,8 @@ class AuthController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'gender' => 'required',
         ]);
 
         //create user
@@ -25,7 +26,9 @@ class AuthController extends Controller
             'last_name' => $attrs['last_name'],
             'email' => $attrs['email'],
             'role' => 2,
-            'password' => bcrypt($attrs['password'])
+            'password' => bcrypt($attrs['password']),
+            'gender' => 'Laki-laki',
+            // 'gender' => $attrs['gender'],
         ]);
 
         //return user & token in response
