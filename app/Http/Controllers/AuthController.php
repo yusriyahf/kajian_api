@@ -17,7 +17,7 @@ class AuthController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-            'gender' => 'required',
+            // 'gender' => 'required',
         ]);
 
         //create user

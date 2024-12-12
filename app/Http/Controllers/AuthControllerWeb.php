@@ -15,7 +15,6 @@ class AuthControllerWeb extends Controller
 
     public function authenticate(Request $request)
     {
-
         $credentials = $request->validate([
             'email' => ['required'],
             'password' => ['required'],
@@ -24,16 +23,23 @@ class AuthControllerWeb extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            // Memeriksa peran pengguna setelah login
             if (Auth::user()->role === 1) {
-                # code...
+                // Jika peran pengguna adalah 1, biarkan mereka masuk
                 return redirect()->intended('/user');
+            } elseif (Auth::user()->role === 2) {
+                // Jika peran pengguna adalah 2, log out dan tampilkan pesan kesalahan
+                Auth::logout();
+                return back()->with('loginError', 'Akses tidak diizinkan untuk pengguna dengan peran ini.');
             } else {
+                // Untuk peran lainnya, Anda bisa menambahkan penanganan lebih lanjut jika diperlukan
                 return redirect()->intended('/login');
             }
         }
 
-        return back()->with('loginError', 'Login failed!');
+        return back()->with('loginError', 'Login gagal! Silakan periksa email dan password.');
     }
+
 
     public function logout(Request $request)
     {

@@ -90,6 +90,15 @@
                         </div>
                         @enderror
                     </div>
+
+                    {{-- @if ($data->image) <!-- Ganti dengan kondisi yang sesuai jika image berisi path gambar -->
+                        <div class="mb-3">
+                            <label for="image_preview" class="form-label">Preview Gambar</label>
+                            <div>
+                                <img src="{{ asset('storage/' . $data->image) }}" alt="Preview Gambar" class="img-fluid" width="100%">
+                            </div>
+                        </div>
+                    @endif --}}
                 
 
                     <div class="mb-3">

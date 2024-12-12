@@ -32,6 +32,8 @@ class KajianControllerWeb extends Controller
             'end_time' => 'required',
         ]);
 
+        $image = $this->saveImage($request->image, 'kajian');
+
         Kajian::create($validatedData);
 
         return redirect('/kajian')->with('success', 'Data kajian Berhasil Ditambahkan');
