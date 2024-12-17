@@ -14,18 +14,19 @@ class TiketController extends Controller
             'tiket' => TiketModel::with([
                 'user:id,first_name,last_name,email',
                 'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
-            ])->get()
-            // 'tiket' => TiketModel::all()
+            ])->where('user_id', auth()->user()->id)->get()
         ], 200);
     }
 
+
     public function tiketLast()
     {
-        // Ambil 2 entri terakhir dan sertakan relasi user dan kajian
+        // Ambil 2 entri terakhir berdasarkan user yang login dan sertakan relasi user dan kajian
         $tiket = TiketModel::with([
             'user:id,first_name,last_name,email',
             'kajian:id,image,title,speaker_name,theme,date,location,start_time,end_time,price'
         ])
+            ->where('user_id', auth()->user()->id)
             ->latest()
             ->take(2)
             ->get();
@@ -40,6 +41,7 @@ class TiketController extends Controller
             'tiket' => $tiket
         ], 200);
     }
+
 
 
 
