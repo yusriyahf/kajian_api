@@ -61,16 +61,15 @@ class DatabaseSeeder extends Seeder
             'gender' => 'Perempuan',
         ]);
 
-        Kajian::create([
-            'title' => 'Kajian Akhir Zaman',
-            'speaker_name' => 'Ustadz Abdul Somad',
-            'theme' => 'Persiapan Menghadapi Hari Akhir',
-            'date' => now()->toDateString(),
-            'price' => 20000,
-            'location' => 'Masjid Raya Al-Falah, Surabaya',
-            'start_time' => now()->format('H:i:s'), // Waktu sekarang
-            'end_time' => now()->addHours(2)->format('H:i:s'),
-            // 'image' => 'kajian_akhir_zaman.jpg' // Jika ada file gambar
-        ]);
+        // Kajian::create([
+        //     'title' => 'Kajian Akhlak Mulia',
+        //     'speaker_name' => 'Ustadz Hanan Attaki',
+        //     'theme' => 'Persiapan Menghadapi Hari Akhir',
+        //     'date' => now()->toDateString(),
+        //     'price' => 20000,
+        //     'location' => 'Masjid Raya Al-Falah, Surabaya',
+        //     'start_time' => now()->format('H:i:s'), // Waktu sekarang
+        //     'end_time' => now()->addHours(2)->format('H:i:s'),
+        // ]);
     }
 }
