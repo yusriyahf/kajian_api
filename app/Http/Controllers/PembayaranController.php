@@ -92,7 +92,7 @@ class PembayaranController extends Controller
 
         $tiket = TiketModel::create([
             'kajian_id' => $attrs['kajian_id'],
-            'user_id' => $attrs['kajian_id'],
+            'user_id' => $attrs['user_id'],
             // 'bukti_pembayaran' => $attrs['bukti_pembayaran'],
         ]);
 
